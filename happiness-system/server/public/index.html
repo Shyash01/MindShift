@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happiness Behavioral System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Happiness Behavioral System</h1>
+
+        <div class="main-layout">
+
+            <!-- LEFT SIDE -->
+            <div class="left-panel">
+
+                <div class="card">
+                    <h2>1️⃣ Identify Your Emotional State</h2>
+
+                    <select id="mood">
+                        <option value="expressive">Expressive</option>
+                        <option value="anxious">Anxious</option>
+                        <option value="irritable">Irritable</option>
+                        <option value="dissociative">Dissociative</option>
+                    </select>
+
+                    <input type="number" id="peopleCount" placeholder="Number of People (1-4)" min="1" max="4">
+
+                    <button onclick="getSuggestion()">Generate Intervention</button>
+                </div>
+
+                <div id="activity-section" class="card" style="display:none;">
+                    <h2>2️⃣ Recommended Micro-Intervention</h2>
+                    <p><strong id="activity-title"></strong></p>
+
+                    <div class="reflection-inputs">
+                        <label>Mood Before (1-10)</label>
+                        <input type="number" id="mood_before" min="1" max="10">
+
+                        <label>Mood After (1-10)</label>
+                        <input type="number" id="mood_after" min="1" max="10">
+                    </div>
+
+                    <button onclick="submitFeedback()">Submit Reflection</button>
+                </div>
+
+                <div id="result-section" class="result-text"></div>
+
+            </div>
+
+            <!-- RIGHT SIDE -->
+            <div class="right-panel">
+
+                <div class="card insights-card">
+                    <h2>3️⃣ Behavioral Insights Dashboard</h2>
+
+                    <button onclick="loadDetailedAnalytics()">View Insights</button>
+
+                    <div class="chart-container">
+                        <canvas id="timelineChart"></canvas>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="activityChart"></canvas>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="moodChart"></canvas>
+                    </div>
+
+                    <div id="insight-panel">
+                        <h3>Personalized Insights</h3>
+                        <div id="insight-content"></div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
