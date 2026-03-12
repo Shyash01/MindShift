@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Schedule Planner - Happiness System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="planner-container">
+    
+    <div class="planner-header">
+      <h2>Daily Schedule Planner</h2>
+      <a href="index.html" class="back-btn">← Back to Dashboard</a>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-labels">
+        <span>Daily Progress</span>
+        <span id="progress-text">0%</span>
+      </div>
+      <div class="progress-track">
+        <div id="progress-fill" class="progress-fill"></div>
+      </div>
+    </div>
+
+    <div class="task-form-card">
+      <input type="text" id="taskInput" placeholder="What needs to be done?" class="full-width-input">
+      
+      <div class="form-row">
+        <select id="taskCategory" title="Category">
+          <option value="Work">💼 Work</option>
+          <option value="Health">🧘 Health</option>
+          <option value="Personal" selected>🏠 Personal</option>
+          <option value="Other">📌 Other</option>
+        </select>
+
+        <select id="taskPriority" title="Priority">
+          <option value="High">🔴 High Priority</option>
+          <option value="Medium" selected>🟡 Medium Priority</option>
+          <option value="Low">🟢 Low Priority</option>
+        </select>
+
+        <input type="time" id="startTime" title="Start Time">
+        <input type="time" id="endTime" title="End Time">
+      </div>
+
+      <button onclick="addTask()" id="saveTaskBtn" class="primary-btn">Add Task</button>
+    </div>
+
+    <div id="taskList" class="task-list">
+      </div>
+    
+    <div id="emptyState" class="empty-state hidden">
+      <h3>No tasks scheduled yet!</h3>
+      <p>Start adding tasks to build your daily routine.</p>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    if (typeof loadTasks === 'function') {
+      loadTasks();
+    }
+  </script>
+  <div id="toast-notification" class="toast"></div>
+</body>
+</html>

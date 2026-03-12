@@ -2,92 +2,280 @@
 <html>
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happiness Behavioral System</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title> MindShift</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+ <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
 
-    <div class="container">
+<body class="min-h-screen">
 
-        <h1>Happiness Behavioral System</h1>
 
-        <div class="main-layout">
+<!-- HEADER -->
+<header class="bg-white shadow-sm">
+  <div class="max-w-6xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4 text-center">
 
-            <!-- LEFT SIDE -->
-            <div class="left-panel">
+    <h1 class="text-xl font-semibold text-gray-800">
+      MindShift
+    </h1>
 
-                <div class="card">
-                    <h2>1️⃣ Identify Your Emotional State</h2>
-
-                    <select id="mood">
-                        <option value="expressive">Expressive</option>
-                        <option value="anxious">Anxious</option>
-                        <option value="irritable">Irritable</option>
-                        <option value="dissociative">Dissociative</option>
-                    </select>
-
-                    <input type="number" id="peopleCount" placeholder="Number of People (1-4)" min="1" max="4">
-
-                    <button onclick="getSuggestion()">Generate Intervention</button>
-                </div>
-
-                <div id="activity-section" class="card" style="display:none;">
-                    <h2>2️⃣ Recommended Micro-Intervention</h2>
-                    <p><strong id="activity-title"></strong></p>
-
-                    <div class="reflection-inputs">
-                        <label>Mood Before (1-10)</label>
-                        <input type="number" id="mood_before" min="1" max="10">
-
-                        <label>Mood After (1-10)</label>
-                        <input type="number" id="mood_after" min="1" max="10">
-                    </div>
-
-                    <button onclick="submitFeedback()">Submit Reflection</button>
-                </div>
-
-                <div id="result-section" class="result-text"></div>
-
-            </div>
-
-            <!-- RIGHT SIDE -->
-            <div class="right-panel">
-
-                <div class="card insights-card">
-                    <h2>3️⃣ Behavioral Insights Dashboard</h2>
-
-                    <button onclick="loadDetailedAnalytics()">View Insights</button>
-
-                    <div class="chart-container">
-                        <canvas id="timelineChart"></canvas>
-                    </div>
-
-                    <div class="chart-container">
-                        <canvas id="activityChart"></canvas>
-                    </div>
-
-                    <div class="chart-container">
-                        <canvas id="moodChart"></canvas>
-                    </div>
-
-                    <div id="insight-panel">
-                        <h3>Personalized Insights</h3>
-                        <div id="insight-content"></div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
+    <div class="flex items-center gap-3">
+      <a href="planner.html" class="planner-btn m-0">
+        Open Daily Planner
+      </a>
+      <button
+        onclick="logout()"
+        class="bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded-lg"
+      >
+        Logout
+      </button>
     </div>
 
-    <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="script.js"></script>
+  </div>
+</header>
+
+
+<main class="max-w-5xl mx-auto px-6 py-10 space-y-10">
+
+
+
+<section class="card p-6">
+
+<h2 class="text-lg font-semibold mb-2">
+How are you feeling right now?
+</h2>
+
+<p class="text-gray-500 mb-6">
+Choose the mood that best reflects your current emotional state.
+</p>
+
+
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+<div class="mood-card p-4 border rounded-lg cursor-pointer hover:shadow-md transition"
+data-mood="expressive">
+<h3 class="font-semibold text-lg">🙂 Expressive</h3>
+<p class="text-sm text-gray-500">
+Creative, energetic and emotionally open.
+</p>
+</div>
+
+
+<div class="mood-card p-4 border rounded-lg cursor-pointer hover:shadow-md transition"
+data-mood="anxious">
+<h3 class="font-semibold text-lg">😟 Anxious</h3>
+<p class="text-sm text-gray-500">
+Restless thoughts and mental overload.
+</p>
+</div>
+
+
+<div class="mood-card p-4 border rounded-lg cursor-pointer hover:shadow-md transition"
+data-mood="irritable">
+<h3 class="font-semibold text-lg">😠 Irritable</h3>
+<p class="text-sm text-gray-500">
+Frustrated, impatient or emotionally reactive.
+</p>
+</div>
+
+
+<div class="mood-card p-4 border rounded-lg cursor-pointer hover:shadow-md transition"
+data-mood="dissociative">
+<h3 class="font-semibold text-lg">😶 Dissociative</h3>
+<p class="text-sm text-gray-500">
+Disconnected, numb or mentally distant.
+</p>
+</div>
+
+</div>
+
+
+<input
+type="number"
+id="peopleCount"
+placeholder="How many people are with you? (1-4)"
+min="1"
+max="4"
+class="mt-6 w-full border rounded-lg px-3 py-2"
+/>
+
+
+<button
+onclick="getSuggestion(event)"
+class="mt-4 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg shadow"
+>
+Suggest Mood Reset Activity
+</button>
+
+</section>
+
+
+
+<section
+id="activity-section"
+class="hidden flex justify-center mt-12"
+>
+
+<div class="bg-white/90 backdrop-blur-md rounded-2xl shadow-lg p-8 max-w-xl w-full">
+
+<h2 class="text-xl font-semibold mb-2 text-gray-800 text-center">
+Recommended Micro-Intervention
+</h2>
+
+<div class="mb-8">
+
+<p class="text-sm text-gray-900 mb-3 text-center">
+Your Suggested Activity
+</p>
+
+<div
+id="activity-title"
+class="bg-gradient-to-r from-slate-50 to-emerald-50 border border-emerald-200 
+rounded-xl p-6 text-emerald-900 text-2xl font-semibold text-center
+shadow-sm transition-all duration-300 hover:shadow-md"
+></div>
+<div id="activity-category"
+class="text-sm text-black-900 text-center mt-2"></div>
+</div>
+
+<div class="grid grid-cols-2 gap-6 max-w-md mx-auto">
+
+<div>
+<label class="block text-sm text-gray-900 mb-1">
+Mood Before
+</label>
+
+<input
+type="number"
+id="mood_before"
+min="1"
+max="10"
+placeholder="1-10"
+class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-400 focus:outline-none"
+/>
+</div>
+
+<div>
+<label class="block text-sm text-gray-900 mb-1">
+Mood After
+</label>
+
+<input
+type="number"
+id="mood_after"
+min="1"
+max="10"
+placeholder="1-10"
+class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-400 focus:outline-none"
+/>
+</div>
+
+</div>
+
+<div class="flex justify-center mt-8">
+
+<button id="record-btn"
+onclick="submitFeedback()"
+class="bg-emerald-600 hover:bg-emerald-700 text-white px-7 py-3 rounded-xl shadow-md hover:shadow-lg transition"
+>
+Record Mood Change
+</button>
+
+</div>
+
+<div
+id="result-section"
+class="mt-5 text-center text-emerald-600 font-semibold"
+></div>
+
+</div>
+
+</section>
+<section class="card p-6">
+
+<div class="flex justify-between items-center mb-6">
+
+<h2 class="text-lg font-semibold">
+Your Emotional Insights
+</h2>
+
+<button
+onclick="loadDetailedAnalytics()"
+class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg"
+>
+View Insights
+</button>
+
+</div>
+
+
+<div id="insight-placeholder" class="text-center py-16 text-gray-500">
+
+  <p class="text-lg font-medium">
+    No insights yet
+  </p>
+
+  <p class="text-sm mt-2">
+    Click <strong>View Insights</strong> to analyze your emotional patterns
+  </p>
+
+</div>
+
+
+<div id="analytics-section" class="hidden">
+
+<h3 class="analytics-title">Behavioral Analytics</h3>
+<div id="charts-container" class=" space-y-8">
+
+  <div class="chart-container">
+    <h4 class="chart-title">Mood Improvement Over Last 10 Sessions</h4>
+      <canvas id="timelineChart"></canvas>
+  </div>
+
+  <div class="chart-container">
+    <h4 class="chart-title">Activity Effectiveness</h4>
+      <canvas id="activityChart"></canvas>
+  </div>
+
+  <div class="chart-container">
+    <h4 class="chart-title">Mood Effectiveness</h4>
+      <canvas id="moodChart"></canvas>
+  </div>
+
+</div>
+</div>
+
+
+<div class="mt-10">
+
+<h3 class="font-semibold mb-2">
+Personalized Insights
+</h3>
+<div id="streak-card" class="mt-4"></div>
+<div id="insight-content" class="text-gray-700"></div>
+
+</div>
+
+</section>
+</main>
+
+
+
+<script>
+
+if (!localStorage.getItem("token")) {
+window.location.href = "/login.html";
+}
+
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="script.js" defer></script>
 
 </body>
 
