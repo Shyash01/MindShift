@@ -789,3 +789,25 @@ button:hover {
     width: 90%;
   }
 }
+
+/* --- Footer Styling --- */
+.footer-card {
+    background: rgba(255, 255, 255, 0.6); /* Semi-transparent */
+    backdrop-filter: blur(10px); /* Glass effect */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 16px;
+    padding: 20px;
+    display: inline-block;
+    max-width: 90%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 768px) {
+    .footer-card {
+        padding: 15px;
+    }
+    .footer-card p {
+        font-size: 13px; /* Slightly smaller for mobile */
+    }
+}
+
