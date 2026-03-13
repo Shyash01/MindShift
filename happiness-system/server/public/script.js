@@ -83,7 +83,6 @@ async function getSuggestion(event) {
 
     const data = await response.json();
     
-
     if (!response.ok) {
       alert(data.message || "Error getting activity");
       return;
@@ -122,6 +121,19 @@ async function getSuggestion(event) {
 
     document.getElementById("result-section").innerText = "";
 
+    /* =========================================
+       NEW: Reset the Record button and inputs 
+       for the new activity
+    ========================================= */
+    const recordBtn = document.getElementById("record-btn");
+    if (recordBtn) {
+        recordBtn.innerText = "Record Your Mood"; 
+        recordBtn.disabled = false;
+    }
+
+    document.getElementById("mood_before").value = "";
+    document.getElementById("mood_after").value = "";
+
   } catch (error) {
 
     console.error(error);
@@ -142,85 +154,83 @@ async function getSuggestion(event) {
 
 async function submitFeedback(){
 
-const mood_before = parseInt(
-document.getElementById("mood_before").value
-);
+  const mood_before = parseInt(
+    document.getElementById("mood_before").value
+  );
 
-const mood_after = parseInt(
-document.getElementById("mood_after").value
-);
+  const mood_after = parseInt(
+    document.getElementById("mood_after").value
+  );
 
-const mood = selectedMood;
+  const mood = selectedMood;
 
-const peopleCount = parseInt(
-document.getElementById("peopleCount").value
-);
+  const peopleCount = parseInt(
+    document.getElementById("peopleCount").value
+  );
 
-if(!mood_before || !mood_after){
-alert("Please enter mood values (1-10)");
-return;
-}
+  if(!mood_before || !mood_after){
+    alert("Please enter mood values (1-10)");
+    return;
+  }
 
-if(mood_before < 1 || mood_before > 10 ||
-mood_after < 1 || mood_after > 10){
+  if(mood_before < 1 || mood_before > 10 ||
+     mood_after < 1 || mood_after > 10){
 
-alert("Mood values must be between 1 and 10");
-return;
+    alert("Mood values must be between 1 and 10");
+    return;
 
-}
+  }
 
-try{
+  try{
 
-const response = await fetch("/api/feedback",{
+    const response = await fetch("/api/feedback",{
 
-method:"POST",
+      method:"POST",
 
-headers:{
-"Content-Type":"application/json",
-"Authorization":`Bearer ${token}`
-},
+      headers:{
+        "Content-Type":"application/json",
+        "Authorization":`Bearer ${token}`
+      },
 
-body:JSON.stringify({
-mood,
-peopleCount,
-mood_before,
-mood_after,
-activity_id:currentActivityId
-})
+      body:JSON.stringify({
+        mood,
+        peopleCount,
+        mood_before,
+        mood_after,
+        activity_id:currentActivityId
+      })
 
-});
+    });
 
-const data = await response.json();
+    const data = await response.json();
 
-if(!response.ok){
-alert(data.message || "Error saving feedback");
-return;
-}
+    if(!response.ok){
+      alert(data.message || "Error saving feedback");
+      return;
+    }
 
-document.getElementById("result-section").innerHTML =
-`🌿 Great job! Mood improved by <strong>+${data.mood_delta}</strong>`;
+    document.getElementById("result-section").innerHTML =
+    `🌿 Great job! Mood improved by <strong>+${data.mood_delta}</strong>`;
 
-/* Wait 2 seconds before hiding activity and refreshing insights */
-const btn = document.getElementById("record-btn");
+    /* Wait 2 seconds before hiding activity and refreshing insights */
+    const btn = document.getElementById("record-btn");
 
-btn.innerText = "✓ Recorded";
-btn.disabled = true;
+    btn.innerText = "✓ Recorded";
+    btn.disabled = true;
 
+    setTimeout(async () => {
+      await loadDetailedAnalytics();
+    }, 1000);
 
-setTimeout(async () => {
-  await loadDetailedAnalytics();
+    document.getElementById("mood_before").value="";
+    document.getElementById("mood_after").value="";
 
-}, 1000);
+  }catch(error){
 
-document.getElementById("mood_before").value="";
-document.getElementById("mood_after").value="";
+    console.error(error);
+    alert("Server error");
 
-}catch(error){
-
-console.error(error);
-alert("Server error");
-
-}
+  }
 
 }
 
