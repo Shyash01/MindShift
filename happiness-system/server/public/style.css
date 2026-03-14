@@ -811,3 +811,15 @@ button:hover {
     }
 }
 
+.header-logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px; 
+}
+
+.app-logo {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
+  border-radius: 6px; /* Optional: gives the rectangle slightly soft corners */
+}

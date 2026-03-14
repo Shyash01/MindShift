@@ -412,6 +412,18 @@ button:hover {
     max-width: 90%;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
 }
+.header-logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px; 
+}
+
+.app-logo {
+  height: 80px;         /* Sets the height to match the text */
+  width: auto;          /* Lets the width naturally form a rectangle */
+  object-fit: contain;  /* Prevents the image from stretching out of proportion */
+  border-radius: 6px;   /* Gives it slightly soft corners (remove this line if you want sharp corners) */
+}
 </style>
 
 </head>
@@ -422,8 +434,9 @@ button:hover {
 
 <div class="navbar">
 
-<div class="logo">
-MindShift
+<div class="logo" style="display: flex; align-items: center; gap: 16px;">
+  <img src="images/logo.jpeg" alt="Amity University Logo" style="height: 70px; width: auto; object-fit: contain;">
+  <span style="font-size: 1.5rem; font-weight: bold; color: #1f2937;">MindShift</span>
 </div>
 
 <div class="nav-buttons">
@@ -436,7 +449,11 @@ MindShift
 <!-- HERO -->
 
 <section class="hero">
-
+<div style="display: flex; justify-content: center; margin-bottom: 24px;">
+    <div style="background-color: #ecfdf5; border: 2px solid #10b981; color: #065f46; padding: 12px 36px; border-radius: 16px; font-size: 2.5rem; font-weight: 800; letter-spacing: -0.02em; box-shadow: 0 8px 20px rgba(16, 185, 129, 0.15);">
+        MindShift
+    </div>
+</div>
 <h1>Improve Your Mood With Micro-Interventions</h1>
 
 <p>
